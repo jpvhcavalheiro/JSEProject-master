@@ -1,0 +1,13 @@
+package repositories;
+import io.altar.jseproject.model.Product;
+
+public class ProductRepository extends EntityRepository <Product> {
+
+}
+/*package repositorio;
+import entities.Mota;
+
+public class MotaRepository extends VeicRepository <Mota>{
+
+}
+*/

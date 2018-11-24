@@ -1,0 +1,28 @@
+package repositories;
+
+import java.util.Scanner;
+
+import io.altar.jseproject.model.Product;
+
+public class ProductRepository extends EntityRepository<Product> {
+
+	private final static ProductRepository INSTANCE = new ProductRepository();
+
+	public static ProductRepository getInstance() {
+		return INSTANCE;
+	}
+
+	public void createProduct () {
+		Scanner sc = new Scanner(System.in);
+		System.out.println("Please insert price:");
+		String price=sc.nextLine();
+		System.out.println("Please insert discount:");
+		int discount=sc.nextInt();
+		System.out.println("Please insert iva:");
+		int iva=sc.nextInt();
+		System.out.println("Price: "+price);
+		System.out.println("Discount: "+discount);
+		System.out.println("Iva: "+iva);
+		sc.close();
+	}
+}

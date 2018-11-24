@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring accessors="true" comment="Delete element from project &apos;StockManagement&apos;&#x0A;- Original project: &apos;StockManagement&apos;&#x0A;- Original element: &apos;StockManagement/src/io.altar.jseproject.repositories&apos;" description="Delete element" element1="/src&lt;io.altar.jseproject.repositories" elements="1" flags="589830" id="org.eclipse.jdt.ui.delete" resources="0" stamp="1542651758943" subPackages="false" version="1.0"/>
+</session>

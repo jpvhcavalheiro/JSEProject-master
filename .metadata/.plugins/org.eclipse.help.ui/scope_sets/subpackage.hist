@@ -1,0 +1,8 @@
+#Wed Nov 14 15:15:51 WET 2018
+__DEFAULT__=false
+org.eclipse.sdk.Eclipse.master=true
+org.eclipse.sdk.Google.master=true
+org.eclipse.help.ui.localSearch.master=true
+org.hibernate.eclipse.help.HibernateWiki.master=true
+expression=subpackage
+org.jboss.tools.developer.search.master=true
