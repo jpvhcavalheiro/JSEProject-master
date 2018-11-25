@@ -114,9 +114,9 @@ public class TextInterface {
 	}
 
 	/**
-	 * createProduct is a function which receives in the console a price, a
-	 * discount and a iva of a product and inserts a product with these features
-	 * in the product hashmap.
+	 * createProduct is a function which receives in the console a price, a discount
+	 * and a iva of a product and inserts a product with these features in the
+	 * product hashmap.
 	 * 
 	 */
 	public static void createProduct() {
@@ -130,12 +130,12 @@ public class TextInterface {
 			discount = sc.nextLine();
 			System.out.println("Please insert iva:");
 			iva = sc.nextLine();
-			if (!isAValidNumber(iva, 0.0, 100.0) || !isAValidNumber(price, 0.0, 32767.0)
-					|| !isAValidNumber(discount, 0.0, 100.0)) {
-				System.out.println("Please insert values within a reasonable range.");
+			if (!isAValidNumber(iva, "testInt", 0.0, 100.0) || !isAValidNumber(price, "testDouble", 0.0, 32767.0)
+					|| !isAValidNumber(discount, "testInt", 0.0, 100.0)) {
+				System.out.println("Please insert numbers within a reasonable range.");
 			}
-		} while (!isAValidNumber(iva, "testInt", 0.0, 100.0) || !isAValidNumber(price, 0.0, 32767.0)
-				|| !isAValidNumber(discount, 0.0, 100.0));
+		} while (!isAValidNumber(iva, "testInt", 0.0, 100.0) || !isAValidNumber(price, "testDouble", 0.0, 32767.0)
+				|| !isAValidNumber(discount, "testInt", 0.0, 100.0));
 		ArrayList<Long> shelvesListAssociatedWithProduct = new ArrayList<Long>();
 		Product product1 = new Product(shelvesListAssociatedWithProduct, Integer.parseInt(discount),
 				Integer.parseInt(iva), Double.parseDouble(price));
@@ -147,9 +147,9 @@ public class TextInterface {
 	}
 
 	/**
-	 * createShelf is a method which receives input from console, including
-	 * shelf capacity, rent price and the product id which is to be put in shelf
-	 * and insert it in the shelf hash map.
+	 * createShelf is a method which receives input from console, including shelf
+	 * capacity, rent price and the product id which is to be put in shelf and
+	 * insert it in the shelf hash map.
 	 */
 
 	public static void createShelf() {
@@ -167,9 +167,10 @@ public class TextInterface {
 			if (!isAValidNumber(rentPrice1, "testDouble", 0.0, 32767.0)) {
 				System.out.println("Error! Rent price provided must be a positive integer.");
 			}
-		} while (!isAValidNumber(rentPrice1, "testDouble", 0.0, 32767.0) || !isAValidProductIdNumber(productIdInShelf1));
+		} while (!isAValidNumber(rentPrice1, "testDouble", 0.0, 32767.0)
+				|| !isAValidProductIdNumber(productIdInShelf1));
 
-		Shelf shelf1 = new Shelf(capacity1, Long.parseLong(productIdInShelf1), Integer.parseInt(rentPrice1));
+		Shelf shelf1 = new Shelf(capacity1, Long.parseLong(productIdInShelf1), Double.parseDouble(rentPrice1));
 		shelfRepository1.createEntity(shelf1);
 		Iterator<Shelf> it = shelfRepository1.showAll();
 		while (it.hasNext()) {
@@ -180,12 +181,18 @@ public class TextInterface {
 	}
 
 	/**
-	 * consultProduct receives a specific id of a product and shows its features
-	 * or shows all products should all be chosen
+	 * consultProduct receives a specific id of a product and shows its features or
+	 * shows all products should all be chosen
 	 */
 	public static void consultProduct() {
-		System.out.println("Insert a specific product id to show its features or insert all to show all products:");
-		String productIdSearch = sc.nextLine();
+		String productIdSearch;
+		do {
+			System.out.println("Insert a specific product id to show its features or insert all to show all products:");
+			productIdSearch = sc.nextLine();
+			if(!isAValidProductIdNumber(productIdSearch)) {
+				System.out.println("ERROR! Please insert a valid product id number!");
+			}
+		}while(!isAValidProductIdNumber(productIdSearch));
 		if (productIdSearch.equals("all")) {
 			Iterator<Product> it = productRepository1.showAll();
 			while (it.hasNext()) {
@@ -214,26 +221,40 @@ public class TextInterface {
 	}
 
 	/**
-	 * removeProduct is a method which receives the product which is to be
-	 * removed and remove it from the product repository
+	 * removeProduct is a method which receives the product which is to be removed
+	 * and remove it from the product repository
 	 */
 	/*
 	 * editar a prateleira de forma a que o id do produto que foi eliminado
-	 * desapareça da prateleira associada
+	 * desapareca da prateleira associada
 	 */
 	public static void removeProduct() {
-		System.out.println("Please insert the product id you want to remove:");
-		String productIdToRemove = sc.nextLine();
-		System.out.println("Are you sure you want to remove the product whose id is " + productIdToRemove + "?");
-		String confirmationOfProductIdToRemove = sc.nextLine();
+		String productIdToRemove;
+		String confirmationOfProductIdToRemove;
+		do {
+			System.out.println("Please insert the product id you want to remove:");
+			productIdToRemove = sc.nextLine();
+			if (!isAValidProductIdNumber(productIdToRemove)) {
+				System.out.println("Error! Please insert a valid product id number!");
+			}
+		} while (!isAValidProductIdNumber(productIdToRemove));
+		do {
+			System.out.println("Are you sure you want to remove the product whose id is " + productIdToRemove
+					+ "?(Please press yes or no)");
+			confirmationOfProductIdToRemove = sc.nextLine();
+			if (!confirmationOfProductIdToRemove.equals("yes") && !confirmationOfProductIdToRemove.equals("no")) {
+				System.out.println("Error! Please insert yes or no! ");
+			}
+		} while (!confirmationOfProductIdToRemove.equals("yes") && !confirmationOfProductIdToRemove.equals("no"));
 		if (confirmationOfProductIdToRemove.equals("yes")) {
+
 			productRepository1.deleteEntityById(Long.parseLong(productIdToRemove));
 		}
 	}
 
 	/**
-	 * removeShelf is a method which receives (as a input from the user) the
-	 * shelf id which is to be removed and remove it from the shelf repository
+	 * removeShelf is a method which receives (as a input from the user) the shelf
+	 * id which is to be removed and remove it from the shelf repository
 	 */
 	/*
 	 * editar a lista das prateleiras de forma a que o id da prateleira que foi
@@ -254,9 +275,9 @@ public class TextInterface {
 	}
 
 	/**
-	 * editProduct() is a method which receives a new discount value, a new IVA
-	 * or a new price (as inputs from the user) and change these features of the
-	 * referred product in the product repository
+	 * editProduct() is a method which receives a new discount value, a new IVA or a
+	 * new price (as inputs from the user) and change these features of the referred
+	 * product in the product repository
 	 */
 	// ?mudar editProduct de modo a que:
 	/* se possa mudar a lista de prateleiras que contêm o produto */
@@ -283,10 +304,9 @@ public class TextInterface {
 	}
 
 	/**
-	 * the method editShelf receives the id of the shelf to change, the new
-	 * capacity of this shelf, the product id which is in this shelf and a new
-	 * rent price (as inputs by the user) and changes the shelf in the
-	 * shelfRepository1
+	 * the method editShelf receives the id of the shelf to change, the new capacity
+	 * of this shelf, the product id which is in this shelf and a new rent price (as
+	 * inputs by the user) and changes the shelf in the shelfRepository1
 	 */
 
 	public static void editShelf() {
@@ -335,8 +355,8 @@ public class TextInterface {
 
 	public static boolean isAValidProductIdNumber(String StringToTest) {
 		try {
+			Long.parseLong(StringToTest);
 			if (productRepository1.fetchEntityById(Long.parseLong(StringToTest)) == null) {
-				System.out.println("Error! Invalid Id number.");
 				return false;
 			} else {
 				return true;
